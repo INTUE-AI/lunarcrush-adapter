@@ -1,50 +1,88 @@
-# INTUE Documentation
+# INTUE LunarCrush Adapter
 
-![Screenshot 2025-05-14 at 5 43 58 PM](https://github.com/user-attachments/assets/5c8a5251-898a-4224-bb4a-30c01f03980d)
+A comprehensive adapter for the LunarCrush API, providing seamless integration with the INTUE ecosystem.
 
-## INTUE Documentation
+## Overview
 
-### Welcome to INTUE
+The LunarCrush Adapter allows INTUE's Model Context Protocols (MCPs) to leverage LunarCrush's powerful crypto social intelligence. This adapter handles authentication, data fetching, caching, and error handling, providing a consistent interface for all LunarCrush API endpoints.
 
-INTUE is the intelligence layer for autonomous trading agents, a comprehensive framework designed for quantitative analysis of cryptocurrency markets using advanced AI protocols and agent-based architecture.
+## Installation
 
-Our platform enables sophisticated signal detection, cross-ecosystem correlation analysis, and autonomous trade execution with unprecedented precision. By leveraging specialized Model Context Protocols (MCPs), INTUE bridges the gap between raw market data and actionable trading intelligence.
+```bash
+npm install @intue/lunarcrush-adapter
+```
 
-This documentation provides a comprehensive guide to the INTUE ecosystem, from high-level concepts to detailed technical specifications for developers, traders, and researchers looking to harness the power of autonomous trading intelligence.
+## Features
 
-Whether you're implementing an existing agent, developing custom MCPs, or creating entirely new agents for the marketplace, this documentation will serve as your definitive resource for working with the INTUE platform.\
-\
-Core Concepts
+- Complete API Coverage: Access to all LunarCrush endpoints
+- Authentication Management: Smart handling of API keys and rate limits
+- Intelligent Caching: Optimized data caching to minimize API calls
+- Error Handling: Robust error handling with fallback strategies
+- Mock Data: Development-friendly mock data for testing
+- Category Mapping: Intelligent ecosystem categorization
 
-#### Agent Architecture
+## Usage
 
-INTUE agents are autonomous, specialized intelligence modules designed to perform specific market analysis functions. Each agent implements a modular architecture consisting of:
+### Basic Usage
 
-* **Signal Generators**: Specialized algorithms for pattern detection across market data
-* **Decision Engine**: Processing pipeline for signal evaluation and action determination
-* **Execution Framework**: Interface layer for trade execution and position management
-* **Performance Analytics**: Self-evaluation and optimization mechanisms
+```javascript
+const { LunarCrushAdapter } = require('@intue/lunarcrush-adapter');
 
-Agents communicate via standardized protocols, enabling composition of complex strategies from simpler building blocks. This modular design allows for continuous improvement and customization without disrupting the overall system.
+// Initialize with your API key
+const lunarcrush = new LunarCrushAdapter({
+  apiKey: 'YOUR_LUNARCRUSH_API_KEY'
+});
 
-#### Model Context Protocols (MCPs)
+// Get coin data
+async function getCoinData() {
+  const bitcoinData = await lunarcrush.getCoinData('bitcoin');
+  console.log('Bitcoin data:', bitcoinData);
+}
 
-MCPs form the foundation of INTUE's intelligence capabilities. These specialized processing modules transform raw market data into contextually relevant signals through:
+getCoinData();
+```
 
-* **Category Classification**: Ecosystem and token categorization with specialized metrics
-* **Metric Processing**: Standardized calculation of key performance indicators
-* **Correlation Detection**: Identification of relationships between disparate data points
-* **Advanced Analysis**: Statistical processing using sophisticated mathematical models
+### Fetching Sentiment Data
 
-MCPs are composable, allowing agents to leverage multiple protocols simultaneously for enhanced signal detection and pattern recognition.
+```javascript
+// Get social metrics for Bitcoin
+const metrics = await lunarcrush.getSocialMetrics('bitcoin', 7); // 7 days
 
-#### Trading Execution Framework
+console.log('Sentiment score:', metrics.sentiment);
+console.log('Social volume:', metrics.socialVolume);
+console.log('Engagement:', metrics.engagement);
+```
 
-The execution layer provides standardized interfaces to multiple exchanges through adapter modules that handle:
+### Working with Ecosystems
 
-* **Order Management**: Precise execution with minimal slippage
-* **Position Tracking**: Real-time monitoring of active positions
-* **Risk Management**: Automated stop-loss, take-profit, and position sizing
-* **Exchange-Specific Optimizations**: Adapter-level specialization for each venue
+```javascript
+// Get top coins in the AI ecosystem
+const aiCoins = await lunarcrush.getEcosystemCoins('ai-agents', 10);
+console.log('Top AI tokens:', aiCoins);
+```
 
-This framework ensures consistent behavior across different trading venues while optimizing for the unique characteristics of each exchange.
+## API Reference
+
+### Constructor Options
+
+- `apiKey`: Your LunarCrush API key
+- `cache`: Optional custom cache instance (defaults to internal cache)
+- `ttl`: Optional cache TTL in milliseconds (defaults to 5 minutes)
+
+### Methods
+
+- `getCoinsList(limit)`: Get list of top coins
+- `getCoinData(coin)`: Get detailed data for a specific coin
+- `getTimeSeries(coin, interval, limit)`: Get historical data
+- `getTopicSentiment(topic, days)`: Get sentiment for a specific topic
+- `getEcosystemCoins(ecosystem, limit)`: Get coins in a specific ecosystem
+- `getSocialMetrics(coin, days)`: Get comprehensive social metrics
+
+## Related Packages
+
+- `@intue/core` - Core utilities for the INTUE ecosystem
+- `@intue/sentiment-analysis-mcp` - Sentiment analysis MCP
+
+## License
+
+MIT
